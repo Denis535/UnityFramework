@@ -1,0 +1,16 @@
+{
+    "name": "Denis535.GameFramework.Pro",
+    "rootNamespace": "UnityEngine",
+    "references": [
+        "GUID:b3fe3ef184551854c9825e624a617826"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,24 @@
+{
+    "name": "com.denis535.game-framework-pro",
+    "displayName": "Game Framework Pro",
+    "version": "1.0.0",
+    "description": "The framework that allows you to design high-quality architecture of your game project.",
+    "author": {
+        "name": "Denis535",
+        "url": "https://denis535.github.io"
+    },
+    "unity": "2023.2",
+    "dependencies": {
+        "com.unity.modules.uielements": "1.0.0",
+        "com.unity.modules.audio": "1.0.0"
+    },
+    "keywords": [
+        "design",
+        "architecture",
+        "pattern",
+        "patterns",
+        "best-practices",
+        "framework",
+        "game-framework"
+    ]
+}
