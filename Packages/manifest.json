@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.unity.addressables": "2.2.2",
+    "com.unity.addressables": "2.7.2",
     "com.unity.feature.development": "1.0.2",
     "com.unity.multiplayer.center": "1.0.0",
     "com.unity.modules.audio": "1.0.0",
