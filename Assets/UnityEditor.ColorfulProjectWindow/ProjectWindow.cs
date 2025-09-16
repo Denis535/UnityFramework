@@ -15,7 +15,7 @@ namespace UnityEditor.ColorfulProjectWindow {
 
         // Constructor
         static ProjectWindow() {
-            new ProjectWindow();
+            _ = new ProjectWindow();
         }
 
         // Constructor
@@ -33,11 +33,11 @@ namespace UnityEditor.ColorfulProjectWindow {
         // DrawElement
         protected override void DrawElement(Rect rect, string path) {
             if (path.Equals( "Assets/Assets" ) || path.StartsWith( "Assets/Assets/" )) {
-                Highlight( rect, Settings.AssetsColor, path.Count( i => i == '/' ) >= 2 );
+                Highlight( rect, this.Settings.AssetsColor, path.Count( i => i == '/' ) >= 2 );
                 return;
             }
             if (path.StartsWith( "Assets/Assets." )) {
-                Highlight( rect, Settings.AssetsColor, path.Count( i => i == '/' ) >= 2 );
+                Highlight( rect, this.Settings.AssetsColor, path.Count( i => i == '/' ) >= 2 );
                 return;
             }
             base.DrawElement( rect, path );
@@ -68,10 +68,10 @@ namespace UnityEditor.ColorfulProjectWindow {
             if (IsMatch( path, "Packages/com.denis535.addressables-source-generator", out package, out content )) {
                 return true;
             }
-            if (IsMatch( path, "Packages/com.denis535.clean-architecture-game-framework", out package, out content )) {
+            if (IsMatch( path, "Packages/com.denis535.colorful-project-window", out package, out content )) {
                 return true;
             }
-            if (IsMatch( path, "Packages/com.denis535.colorful-project-window", out package, out content )) {
+            if (IsMatch( path, "Packages/com.denis535.game-framework-pro", out package, out content )) {
                 return true;
             }
             package = null;
@@ -86,19 +86,19 @@ namespace UnityEditor.ColorfulProjectWindow {
                 if (IsMatch( path, "Packages/com.denis535.addressables-source-generator/Editor/Denis535.Addressables.SourceGenerator", out assembly, out content )) {
                     return true;
                 }
-                if (IsMatch( path, "Packages/com.denis535.clean-architecture-game-framework/Runtime/Denis535.CleanArchitectureGameFramework", out assembly, out content )) {
-                    return true;
-                }
-                if (IsMatch( path, "Packages/com.denis535.clean-architecture-game-framework/Runtime/Denis535.CleanArchitectureGameFramework.Additions", out assembly, out content )) {
-                    return true;
-                }
-                if (IsMatch( path, "Packages/com.denis535.clean-architecture-game-framework/Runtime/Denis535.CleanArchitectureGameFramework.Internal", out assembly, out content )) {
-                    return true;
-                }
-                if (IsMatch( path, "Packages/com.denis535.clean-architecture-game-framework/Editor/Denis535.CleanArchitectureGameFramework.Editor", out assembly, out content )) {
-                    return true;
-                }
                 if (IsMatch( path, "Packages/com.denis535.colorful-project-window/Editor/Denis535.ColorfulProjectWindow", out assembly, out content )) {
+                    return true;
+                }
+                if (IsMatch( path, "Packages/com.denis535.game-framework-pro/Runtime/Denis535.GameFramework.Pro", out assembly, out content )) {
+                    return true;
+                }
+                if (IsMatch( path, "Packages/com.denis535.game-framework-pro/Runtime/Denis535.GameFramework.Pro.Additions", out assembly, out content )) {
+                    return true;
+                }
+                if (IsMatch( path, "Packages/com.denis535.game-framework-pro/Runtime/Denis535.GameFramework.Pro.Internal", out assembly, out content )) {
+                    return true;
+                }
+                if (IsMatch( path, "Packages/com.denis535.game-framework-pro/Editor/Denis535.GameFramework.Pro.Editor", out assembly, out content )) {
                     return true;
                 }
             } else {

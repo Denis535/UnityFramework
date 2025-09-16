@@ -16,15 +16,6 @@
         "com.unity.addressables": "1.0.0"
       }
     },
-    "com.denis535.clean-architecture-game-framework": {
-      "version": "file:com.denis535.clean-architecture-game-framework",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.modules.uielements": "1.0.0",
-        "com.unity.modules.audio": "1.0.0"
-      }
-    },
     "com.denis535.colorful-project-window": {
       "version": "file:com.denis535.colorful-project-window",
       "depth": 0,
