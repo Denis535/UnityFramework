@@ -14,8 +14,8 @@ namespace UnityEditor.AddressableAssets {
 
         // Generate
         public virtual void Generate(string path, string @namespace, string @class, AddressableAssetSettings settings) {
-            var addresses = GetEntries( settings ).Where( IsSupported ).Select( i => (GetPath( i ), i.address) ).ToArray();
-            Generate( path, @namespace, @class, addresses );
+            var addresses = GetEntries( settings ).Where( this.IsSupported ).Select( i => (GetPath( i ), i.address) ).ToArray();
+            this.Generate( path, @namespace, @class, addresses );
             static List<AddressableAssetEntry> GetEntries(AddressableAssetSettings settings) {
                 var entries = new List<AddressableAssetEntry>();
                 settings.GetAllAssets( entries, true );

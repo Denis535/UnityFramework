@@ -16,7 +16,7 @@ namespace UnityEditor.ColorfulProjectWindow {
 
         // Constructor
         public ProjectWindowBase() {
-            EditorApplication.projectWindowItemOnGUI = OnGUI;
+            EditorApplication.projectWindowItemOnGUI = this.OnGUI;
         }
         public virtual void Dispose() {
             EditorApplication.projectWindowItemOnGUI = null;
@@ -25,60 +25,60 @@ namespace UnityEditor.ColorfulProjectWindow {
         // OnGUI
         protected virtual void OnGUI(string guid, Rect rect) {
             var path = AssetDatabase.GUIDToAssetPath( guid );
-            DrawElement( rect, path );
+            this.DrawElement( rect, path );
         }
 
         // DrawElement
         protected virtual void DrawElement(Rect rect, string path) {
-            if (IsPackage( path, out var package, out var content )) {
+            if (this.IsPackage( path, out var package, out var content )) {
                 if (content == string.Empty) {
                     // Assets/[Package]
                     // Assets/[Package]
-                    DrawPackage( rect, path, package );
+                    this.DrawPackage( rect, path, package );
                 } else {
-                    if (IsAssembly( path, package, out var assembly, out content )) {
+                    if (this.IsAssembly( path, package, out var assembly, out content )) {
                         // Assets/[Package]/[Assembly]/[Content]
                         // Assets/[Package]/[Assembly]/[Content]
-                        DrawAssembly( rect, path, package, assembly, content );
+                        this.DrawAssembly( rect, path, package, assembly, content );
                     }
                 }
             } else {
-                if (IsAssembly( path, null, out var assembly, out content )) {
+                if (this.IsAssembly( path, null, out var assembly, out content )) {
                     // Assets/[Assembly]/[Content]
                     // Assets/[Assembly]/[Content]
-                    DrawAssembly( rect, path, null, assembly, content );
+                    this.DrawAssembly( rect, path, null, assembly, content );
                 }
             }
         }
         private void DrawAssembly(Rect rect, string path, string? package, string assembly, string content) {
             if (content == string.Empty) {
-                DrawAssembly( rect, path, package, assembly );
+                this.DrawAssembly( rect, path, package, assembly );
             } else {
-                if (IsAssets( path, package, assembly, content )) {
-                    DrawAssets( rect, path, package, assembly, content );
-                } else if (IsResources( path, package, assembly, content )) {
-                    DrawResources( rect, path, package, assembly, content );
-                } else if (IsSources( path, package, assembly, content )) {
-                    DrawSources( rect, path, package, assembly, content );
+                if (this.IsAssets( path, package, assembly, content )) {
+                    this.DrawAssets( rect, path, package, assembly, content );
+                } else if (this.IsResources( path, package, assembly, content )) {
+                    this.DrawResources( rect, path, package, assembly, content );
+                } else if (this.IsSources( path, package, assembly, content )) {
+                    this.DrawSources( rect, path, package, assembly, content );
                 }
             }
         }
 
         // DrawPackage
         protected virtual void DrawPackage(Rect rect, string path, string package) {
-            Highlight( rect, Settings.PackageColor, false );
+            Highlight( rect, this.Settings.PackageColor, false );
         }
         protected virtual void DrawAssembly(Rect rect, string path, string? package, string assembly) {
-            Highlight( rect, Settings.AssemblyColor, false );
+            Highlight( rect, this.Settings.AssemblyColor, false );
         }
         protected virtual void DrawAssets(Rect rect, string path, string? package, string? assembly, string content) {
-            Highlight( rect, Settings.AssetsColor, content.Contains( '/' ) );
+            Highlight( rect, this.Settings.AssetsColor, content.Contains( '/' ) );
         }
         protected virtual void DrawResources(Rect rect, string path, string? package, string? assembly, string content) {
-            Highlight( rect, Settings.ResourcesColor, content.Contains( '/' ) );
+            Highlight( rect, this.Settings.ResourcesColor, content.Contains( '/' ) );
         }
         protected virtual void DrawSources(Rect rect, string path, string? package, string? assembly, string content) {
-            Highlight( rect, Settings.SourcesColor, content.Contains( '/' ) );
+            Highlight( rect, this.Settings.SourcesColor, content.Contains( '/' ) );
         }
 
         // IsPackage

@@ -14,8 +14,8 @@ namespace UnityEditor.AddressableAssets {
 
         // Generate
         public virtual void Generate(string path, string @namespace, string @class, AddressableAssetSettings settings) {
-            var labels = settings.GetLabels().Where( IsSupported ).Select( i => (GetPath( i ), i) ).ToArray();
-            Generate( path, @namespace, @class, labels );
+            var labels = settings.GetLabels().Where( this.IsSupported ).Select( i => (GetPath( i ), i) ).ToArray();
+            this.Generate( path, @namespace, @class, labels );
             static string[] GetPath(string label) {
                 return label.Split( '/', '\\', '.' );
             }

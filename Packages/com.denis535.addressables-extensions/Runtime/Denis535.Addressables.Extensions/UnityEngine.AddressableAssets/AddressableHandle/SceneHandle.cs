@@ -17,59 +17,59 @@ namespace UnityEngine.AddressableAssets {
 
         // Load
         public SceneHandle Load(LoadSceneMode loadMode, bool activateOnLoad) {
-            Assert_IsNotValid();
-            Handle = Addressables.LoadSceneAsync( Key, loadMode, activateOnLoad );
+            this.Assert_IsNotValid();
+            this.Handle = Addressables.LoadSceneAsync( this.Key, loadMode, activateOnLoad );
             return this;
         }
 
         // Wait
         public ValueTask WaitAsync() {
-            Assert_IsValid();
-            return Handle.WaitAsync( default );
+            this.Assert_IsValid();
+            return this.Handle.WaitAsync( default );
         }
 
         // GetValue
         public async ValueTask<Scene> GetValueAsync() {
-            Assert_IsValid();
-            var value = await Handle.GetResultAsync( default );
+            this.Assert_IsValid();
+            var value = await this.Handle.GetResultAsync( default );
             return value.Scene;
         }
 
         // Activate
         public async ValueTask<Scene> ActivateAsync() {
-            Assert_IsValid();
-            var value = await Handle.GetResultAsync( default );
+            this.Assert_IsValid();
+            var value = await this.Handle.GetResultAsync( default );
             await value.ActivateAsync();
             return value.Scene;
         }
 
         // Unload
         public void Unload() {
-            Assert_IsValid();
-            Addressables.UnloadSceneAsync( Handle ).Wait();
-            Handle = default;
+            this.Assert_IsValid();
+            Addressables.UnloadSceneAsync( this.Handle ).Wait();
+            this.Handle = default;
         }
         public async ValueTask UnloadAsync() {
-            Assert_IsValid();
-            await Addressables.UnloadSceneAsync( Handle ).WaitAsync( default );
-            Handle = default;
+            this.Assert_IsValid();
+            await Addressables.UnloadSceneAsync( this.Handle ).WaitAsync( default );
+            this.Handle = default;
         }
 
         // Unload
         public void UnloadSafe() {
-            if (Handle.IsValid()) {
-                Unload();
+            if (this.Handle.IsValid()) {
+                this.Unload();
             }
         }
         public async ValueTask UnloadSafeAsync() {
-            if (Handle.IsValid()) {
-                await UnloadAsync();
+            if (this.Handle.IsValid()) {
+                await this.UnloadAsync();
             }
         }
 
         // Utils
         public override string ToString() {
-            return "SceneHandle: " + Key;
+            return "SceneHandle: " + this.Key;
         }
 
     }

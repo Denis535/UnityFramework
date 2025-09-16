@@ -14,14 +14,14 @@ namespace System.Collections.Generic {
         public abstract class Item {
             public string Key { get; }
             public Item(string key) {
-                Key = key;
+                this.Key = key;
             }
         }
         // ValueItem
         public class ValueItem : Item {
             public T Value { get; }
             public ValueItem(string key, T value) : base( key ) {
-                Value = value;
+                this.Value = value;
             }
         }
         // ListItem

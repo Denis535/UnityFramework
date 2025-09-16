@@ -23,12 +23,12 @@ namespace UnityEngine.ResourceManagement.AsyncOperations {
         // Wait
         public static void Wait(this AsyncOperationHandle handle) {
             if (handle.IsFailed()) throw handle.OperationException;
-            handle.WaitForCompletion();
+            _ = handle.WaitForCompletion();
             if (handle.IsFailed()) throw handle.OperationException;
         }
         public static async ValueTask WaitAsync(this AsyncOperationHandle handle, CancellationToken cancellationToken) {
             if (handle.IsFailed()) throw handle.OperationException;
-            await handle.Task.WaitAsync( cancellationToken );
+            _ = await handle.Task.WaitAsync( cancellationToken );
             cancellationToken.ThrowIfCancellationRequested();
             if (handle.IsFailed()) throw handle.OperationException;
         }
@@ -60,12 +60,12 @@ namespace UnityEngine.ResourceManagement.AsyncOperations {
         // Wait
         public static void Wait<T>(this AsyncOperationHandle<T> handle) {
             if (handle.IsFailed()) throw handle.OperationException;
-            handle.WaitForCompletion();
+            _ = handle.WaitForCompletion();
             if (handle.IsValid() && handle.IsFailed()) throw handle.OperationException;
         }
         public static async ValueTask WaitAsync<T>(this AsyncOperationHandle<T> handle, CancellationToken cancellationToken) {
             if (handle.IsFailed()) throw handle.OperationException;
-            await handle.Task.WaitAsync( cancellationToken );
+            _ = await handle.Task.WaitAsync( cancellationToken );
             cancellationToken.ThrowIfCancellationRequested();
             if (handle.IsValid() && handle.IsFailed()) throw handle.OperationException;
         }

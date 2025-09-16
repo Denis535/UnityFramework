@@ -7,11 +7,11 @@ namespace UnityEditor.ColorfulProjectWindow {
 
     public class Settings {
 
-        private static readonly Color DefaultPackageColor   = HSVA( 240, 1.0f, 1.0f, 0.3f );
-        private static readonly Color DefaultAssemblyColor  = HSVA( 000, 1.0f, 1.0f, 0.3f );
-        private static readonly Color DefaultAssetsColor    = HSVA( 060, 1.0f, 1.0f, 0.3f );
+        private static readonly Color DefaultPackageColor = HSVA( 240, 1.0f, 1.0f, 0.3f );
+        private static readonly Color DefaultAssemblyColor = HSVA( 000, 1.0f, 1.0f, 0.3f );
+        private static readonly Color DefaultAssetsColor = HSVA( 060, 1.0f, 1.0f, 0.3f );
         private static readonly Color DefaultResourcesColor = HSVA( 060, 1.0f, 1.0f, 0.3f );
-        private static readonly Color DefaultSourcesColor   = HSVA( 120, 1.0f, 1.0f, 0.3f );
+        private static readonly Color DefaultSourcesColor = HSVA( 120, 1.0f, 1.0f, 0.3f );
         private static Settings? instance;
 
         // Instance
@@ -26,34 +26,34 @@ namespace UnityEditor.ColorfulProjectWindow {
 
         // Constructor
         private Settings() {
-            Load();
+            this.Load();
         }
 
         // Load
         public void Load() {
-            PackageColor   = GetColor( "ColorfulProjectWindow.Settings.PackageColor",   DefaultPackageColor );
-            AssemblyColor  = GetColor( "ColorfulProjectWindow.Settings.AssemblyColor",  DefaultAssemblyColor );
-            AssetsColor    = GetColor( "ColorfulProjectWindow.Settings.AssetsColor",    DefaultAssetsColor );
-            ResourcesColor = GetColor( "ColorfulProjectWindow.Settings.ResourcesColor", DefaultResourcesColor );
-            SourcesColor   = GetColor( "ColorfulProjectWindow.Settings.SourcesColor",   DefaultSourcesColor );
+            this.PackageColor = GetColor( "ColorfulProjectWindow.Settings.PackageColor", DefaultPackageColor );
+            this.AssemblyColor = GetColor( "ColorfulProjectWindow.Settings.AssemblyColor", DefaultAssemblyColor );
+            this.AssetsColor = GetColor( "ColorfulProjectWindow.Settings.AssetsColor", DefaultAssetsColor );
+            this.ResourcesColor = GetColor( "ColorfulProjectWindow.Settings.ResourcesColor", DefaultResourcesColor );
+            this.SourcesColor = GetColor( "ColorfulProjectWindow.Settings.SourcesColor", DefaultSourcesColor );
         }
 
         // Save
         public void Save() {
-            SetColor( "ColorfulProjectWindow.Settings.PackageColor",   PackageColor );
-            SetColor( "ColorfulProjectWindow.Settings.AssemblyColor",  AssemblyColor );
-            SetColor( "ColorfulProjectWindow.Settings.AssetsColor",    AssetsColor );
-            SetColor( "ColorfulProjectWindow.Settings.ResourcesColor", ResourcesColor );
-            SetColor( "ColorfulProjectWindow.Settings.SourcesColor",   SourcesColor );
+            SetColor( "ColorfulProjectWindow.Settings.PackageColor", this.PackageColor );
+            SetColor( "ColorfulProjectWindow.Settings.AssemblyColor", this.AssemblyColor );
+            SetColor( "ColorfulProjectWindow.Settings.AssetsColor", this.AssetsColor );
+            SetColor( "ColorfulProjectWindow.Settings.ResourcesColor", this.ResourcesColor );
+            SetColor( "ColorfulProjectWindow.Settings.SourcesColor", this.SourcesColor );
         }
 
         // Reset
         public void Reset() {
-            PackageColor   = DefaultPackageColor;
-            AssemblyColor  = DefaultAssemblyColor;
-            AssetsColor    = DefaultAssetsColor;
-            ResourcesColor = DefaultResourcesColor;
-            SourcesColor   = DefaultSourcesColor;
+            this.PackageColor = DefaultPackageColor;
+            this.AssemblyColor = DefaultAssemblyColor;
+            this.AssetsColor = DefaultAssetsColor;
+            this.ResourcesColor = DefaultResourcesColor;
+            this.SourcesColor = DefaultSourcesColor;
         }
 
         // Helpers

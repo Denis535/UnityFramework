@@ -15,46 +15,46 @@ namespace UnityEngine.AddressableAssets {
 
         // Load
         public AssetListHandle<T> Load() {
-            Assert_IsNotValid();
-            Handle = Addressables2.LoadAssetListAsync<T>( Keys );
+            this.Assert_IsNotValid();
+            this.Handle = Addressables2.LoadAssetListAsync<T>( this.Keys );
             return this;
         }
 
         // Wait
         public void Wait() {
-            Assert_IsValid();
-            Handle.Wait();
+            this.Assert_IsValid();
+            this.Handle.Wait();
         }
         public ValueTask WaitAsync(CancellationToken cancellationToken) {
-            Assert_IsValid();
-            return Handle.WaitAsync( cancellationToken );
+            this.Assert_IsValid();
+            return this.Handle.WaitAsync( cancellationToken );
         }
 
         // GetValues
         public IReadOnlyList<T> GetValues() {
-            Assert_IsValid();
-            return Handle.GetResult();
+            this.Assert_IsValid();
+            return this.Handle.GetResult();
         }
         public ValueTask<IReadOnlyList<T>> GetValuesAsync(CancellationToken cancellationToken) {
-            Assert_IsValid();
-            return Handle.GetResultAsync( cancellationToken );
+            this.Assert_IsValid();
+            return this.Handle.GetResultAsync( cancellationToken );
         }
 
         // Release
         public void Release() {
-            Assert_IsValid();
-            Addressables.Release( Handle );
-            Handle = default;
+            this.Assert_IsValid();
+            Addressables.Release( this.Handle );
+            this.Handle = default;
         }
         public void ReleaseSafe() {
-            if (IsValid) {
-                Release();
+            if (this.IsValid) {
+                this.Release();
             }
         }
 
         // Utils
         public override string ToString() {
-            return "AssetListHandle: " + string.Join( ", ", Keys );
+            return "AssetListHandle: " + string.Join( ", ", this.Keys );
         }
 
     }

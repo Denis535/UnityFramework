@@ -34,19 +34,19 @@ namespace UnityEditor.ColorfulProjectWindow {
         public override void OnGUI(string searchContext) {
             using (var scope = new EditorGUI.ChangeCheckScope()) {
                 using (new EditorGUILayout.VerticalScope( GUI.skin.box )) {
-                    Settings.PackageColor = EditorGUILayout.ColorField( "Package Color", Settings.PackageColor );
-                    Settings.AssemblyColor = EditorGUILayout.ColorField( "Assembly Color", Settings.AssemblyColor );
-                    Settings.AssetsColor = EditorGUILayout.ColorField( "Assets Color", Settings.AssetsColor );
-                    Settings.ResourcesColor = EditorGUILayout.ColorField( "Resources Color", Settings.ResourcesColor );
-                    Settings.SourcesColor = EditorGUILayout.ColorField( "Sources Color", Settings.SourcesColor );
+                    this.Settings.PackageColor = EditorGUILayout.ColorField( "Package Color", this.Settings.PackageColor );
+                    this.Settings.AssemblyColor = EditorGUILayout.ColorField( "Assembly Color", this.Settings.AssemblyColor );
+                    this.Settings.AssetsColor = EditorGUILayout.ColorField( "Assets Color", this.Settings.AssetsColor );
+                    this.Settings.ResourcesColor = EditorGUILayout.ColorField( "Resources Color", this.Settings.ResourcesColor );
+                    this.Settings.SourcesColor = EditorGUILayout.ColorField( "Sources Color", this.Settings.SourcesColor );
                     if (GUILayout.Button( "Reset", GUILayout.ExpandWidth( false ) )) {
-                        Settings.Reset();
+                        this.Settings.Reset();
                     }
                 }
                 if (scope.changed) {
                     var window = (EditorWindow?) Resources.FindObjectsOfTypeAll( Type.GetType( "UnityEditor.ProjectBrowser, UnityEditor.CoreModule" ) ).FirstOrDefault();
                     window?.Repaint();
-                    Settings.Save();
+                    this.Settings.Save();
                 }
             }
         }

@@ -2,9 +2,9 @@
     "name": "Denis535.GameFramework.Pro.Editor",
     "rootNamespace": "UnityEngine",
     "references": [
-        "GUID:b3fe3ef184551854c9825e624a617826",
-        "GUID:5d84abae7084afd45a745ed680d4fb0e",
-        "GUID:8dd91c5906d12f348bfc27636c6be7b3"
+        "GUID:1582d8dabc08ee147abba6d7d9fa1afc",
+        "GUID:fabfbf2cc1541904aa1204298b6b1e4c",
+        "GUID:731a9b95dc199d44ba478bacf32edbf2"
     ],
     "includePlatforms": [
         "Editor"

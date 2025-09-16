@@ -18,16 +18,16 @@ namespace UnityEngine.AddressableAssets {
 
         // Constructor
         public AddressableListHandle(string[] keys) {
-            Keys = keys;
+            this.Keys = keys;
         }
 
         // Heleprs
         protected void Assert_IsValid() {
-            if (IsValid) return;
+            if (this.IsValid) return;
             throw new InvalidOperationException( $"AddressableListHandle `{this}` must be valid" );
         }
         protected void Assert_IsNotValid() {
-            if (!IsValid) return;
+            if (!this.IsValid) return;
             throw new InvalidOperationException( $"AddressableListHandle `{this}` is already valid" );
         }
 
@@ -36,10 +36,10 @@ namespace UnityEngine.AddressableAssets {
 
         // Handle
         protected AsyncOperationHandle<IReadOnlyList<T>> Handle { get; set; }
-        public override bool IsValid => Handle.IsValid();
-        public override bool IsDone => Handle.IsValid() && Handle.IsDone;
-        public override bool IsSucceeded => Handle.IsValid() && Handle.IsSucceeded();
-        public override bool IsFailed => Handle.IsValid() && Handle.IsFailed();
+        public override bool IsValid => this.Handle.IsValid();
+        public override bool IsDone => this.Handle.IsValid() && this.Handle.IsDone;
+        public override bool IsSucceeded => this.Handle.IsValid() && this.Handle.IsSucceeded();
+        public override bool IsFailed => this.Handle.IsValid() && this.Handle.IsFailed();
 
         // Constructor
         public AddressableListHandle(string[] keys) : base( keys ) {

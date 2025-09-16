@@ -10,7 +10,7 @@ namespace UnityEngine.AddressableAssets {
     public class AddressableSourceGeneratorEditor : Editor {
 
         // Target
-        private AddressableSourceGenerator Target => (AddressableSourceGenerator) target;
+        private AddressableSourceGenerator Target => (AddressableSourceGenerator) this.target;
 
         // Awake
         public void Awake() {
@@ -20,14 +20,14 @@ namespace UnityEngine.AddressableAssets {
 
         // OnInspectorGUI
         public override void OnInspectorGUI() {
-            LabelField( "Resources Class Namespace", Target.ResourcesClassNamespace );
-            LabelField( "Resources Class Name", Target.ResourcesClassName );
+            LabelField( "Resources Class Namespace", this.Target.ResourcesClassNamespace );
+            LabelField( "Resources Class Name", this.Target.ResourcesClassName );
             EditorGUILayout.Separator();
-            LabelField( "Labels Class Namespace", Target.LabelsClassNamespace );
-            LabelField( "Labels Class Name", Target.LabelsClassName );
+            LabelField( "Labels Class Namespace", this.Target.LabelsClassNamespace );
+            LabelField( "Labels Class Name", this.Target.LabelsClassName );
             EditorGUILayout.Separator();
             if (GUILayout.Button( "Generate" )) {
-                Target.Generate();
+                this.Target.Generate();
             }
         }
 

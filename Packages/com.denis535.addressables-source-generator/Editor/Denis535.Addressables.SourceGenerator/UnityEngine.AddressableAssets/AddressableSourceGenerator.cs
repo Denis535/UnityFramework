@@ -14,11 +14,11 @@ namespace UnityEngine.AddressableAssets {
         // Directory
         private string Directory => Path.GetDirectoryName( AssetDatabase.GetAssetPath( this ) );
         // Path
-        public string ResourcesPath => Path.Combine( Directory, ResourcesClassName + ".cs" );
-        public string LabelsPath => Path.Combine( Directory, LabelsClassName + ".cs" );
+        public string ResourcesPath => Path.Combine( this.Directory, this.ResourcesClassName + ".cs" );
+        public string LabelsPath => Path.Combine( this.Directory, this.LabelsClassName + ".cs" );
         // Namespace
-        public string ResourcesClassNamespace => new DirectoryInfo( Directory ).Name;
-        public string LabelsClassNamespace => new DirectoryInfo( Directory ).Name;
+        public string ResourcesClassNamespace => new DirectoryInfo( this.Directory ).Name;
+        public string LabelsClassNamespace => new DirectoryInfo( this.Directory ).Name;
         // Name
         public string ResourcesClassName => "R";
         public string LabelsClassName => "L";
@@ -26,8 +26,8 @@ namespace UnityEngine.AddressableAssets {
         // Generate
         public void Generate() {
             var settings = AddressableAssetSettingsDefaultObject.Settings;
-            new ResourcesSourceGenerator().Generate( ResourcesPath, ResourcesClassNamespace, ResourcesClassName, settings );
-            new LabelsSourceGenerator().Generate( LabelsPath, LabelsClassNamespace, LabelsClassName, settings );
+            new ResourcesSourceGenerator().Generate( this.ResourcesPath, this.ResourcesClassNamespace, this.ResourcesClassName, settings );
+            new LabelsSourceGenerator().Generate( this.LabelsPath, this.LabelsClassNamespace, this.LabelsClassName, settings );
         }
 
     }

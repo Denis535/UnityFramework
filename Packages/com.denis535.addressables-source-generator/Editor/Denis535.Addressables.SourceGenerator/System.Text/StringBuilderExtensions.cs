@@ -16,11 +16,11 @@ namespace System.Text {
         private static StringBuilder AppendHierarchy<T>(this StringBuilder builder, int indent, T @object, Func<T, string?> textSelector, Func<T, IEnumerable<T>?> childrenSelector) {
             var text = textSelector( @object );
             var children = childrenSelector( @object );
-            builder.AppendIndent( indent ).Append( text );
+            _ = builder.AppendIndent( indent ).Append( text );
             if (children != null) {
                 foreach (var child in children) {
-                    builder.AppendLine();
-                    builder.AppendHierarchy( indent + 1, child, textSelector, childrenSelector );
+                    _ = builder.AppendLine();
+                    _ = builder.AppendHierarchy( indent + 1, child, textSelector, childrenSelector );
                 }
             }
             return builder;
@@ -41,15 +41,15 @@ namespace System.Text {
             builder.AppendCompilationUnit( @namespace, @class, GetTreeList( list ) );
         }
         public static void AppendCompilationUnit(this StringBuilder builder, string @namespace, string @class, KeyValueTreeList<string> treeList) {
-            builder.AppendLine( $"namespace {@namespace} {{" );
+            _ = builder.AppendLine( $"namespace {@namespace} {{" );
             {
                 builder.AppendClass( 1, @class, treeList.Items.ToArray() );
             }
-            builder.AppendLine( "}" );
+            _ = builder.AppendLine( "}" );
         }
 
         private static void AppendClass(this StringBuilder builder, int indent, string name, KeyValueTreeList<string>.Item[] list) {
-            builder.AppendIndent( indent ).AppendLine( $"public static class @{GetClassIdentifier( name )} {{" );
+            _ = builder.AppendIndent( indent ).AppendLine( $"public static class @{GetClassIdentifier( name )} {{" );
             foreach (var item in Sort( list )) {
                 if (item is KeyValueTreeList<string>.ValueItem item_value) {
                     builder.AppendConst( indent + 1, item_value.Key, item_value.Value );
@@ -58,11 +58,11 @@ namespace System.Text {
                     builder.AppendClass( indent + 1, item_list.Key, item_list.Items.ToArray() );
                 }
             }
-            builder.AppendIndent( indent ).AppendLine( "}" );
+            _ = builder.AppendIndent( indent ).AppendLine( "}" );
         }
 
         private static void AppendConst(this StringBuilder builder, int indent, string name, string value) {
-            builder.AppendIndent( indent ).AppendLine( $"public const string @{GetConstIdentifier( name )} = \"{value}\";" );
+            _ = builder.AppendIndent( indent ).AppendLine( $"public const string @{GetConstIdentifier( name )} = \"{value}\";" );
         }
 
         // Helpers
