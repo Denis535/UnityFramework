@@ -24,11 +24,11 @@ namespace UnityEngine.Framework {
     // CharacterBase
     public abstract class CharacterBase : EntityBase {
     }
-    // TechniqueBase
-    public abstract class TechniqueBase : EntityBase {
+    // MachineBase
+    public abstract class MachineBase : EntityBase {
     }
-    // ThingBase
-    public abstract class ThingBase : EntityBase {
+    // InteractiveBase
+    public abstract class InteractiveBase : EntityBase {
     }
     // CameraBase
     public abstract class CameraBase : EntityBase {
