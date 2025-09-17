@@ -8,11 +8,11 @@ namespace UnityEngine.Framework {
     public abstract class PlayerBase2 : PlayerBase {
 
         // System
-        protected IDependencyContainer Container { get; }
+        protected IDependencyProvider Provider { get; }
 
         // Constructor
-        public PlayerBase2(IDependencyContainer container) {
-            this.Container = container;
+        public PlayerBase2(IDependencyProvider provider) {
+            this.Provider = provider;
         }
         public override void Dispose() {
             base.Dispose();

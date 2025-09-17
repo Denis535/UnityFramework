@@ -10,14 +10,16 @@ namespace UnityEngine.Framework {
         where TApplication : notnull, ApplicationBase {
 
         // System
-        protected IDependencyContainer Container { get; }
+        protected IDependencyProvider Provider { get; }
         // Framework
-        protected TRouter Router => this.Container.RequireDependency<TRouter>();
-        protected TApplication Application => this.Container.RequireDependency<TApplication>();
+        protected TRouter Router { get; }
+        protected TApplication Application { get; }
 
         // Constructor
-        public ThemeBase2(IDependencyContainer container, AudioSource audioSource) : base( audioSource ) {
-            this.Container = container;
+        public ThemeBase2(IDependencyProvider provider, AudioSource audioSource) : base( audioSource ) {
+            this.Provider = provider;
+            this.Router = this.Provider.RequireDependency<TRouter>();
+            this.Application = this.Provider.RequireDependency<TApplication>();
         }
         public override void Dispose() {
             base.Dispose();

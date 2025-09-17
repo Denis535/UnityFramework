@@ -9,7 +9,7 @@ namespace UnityEngine.Framework {
     using UnityEngine;
     using UnityEngine.UIElements;
 
-    public abstract class ProgramBase2 : ProgramBase, IDependencyContainer {
+    public abstract class ProgramBase2 : ProgramBase, IDependencyProvider {
 
         // Awake
         protected override void Awake() {
@@ -35,7 +35,7 @@ namespace UnityEngine.Framework {
         }
 
         // GetValue
-        Option<object?> IDependencyContainer.GetValue(Type type, object? argument) {
+        Option<object?> IDependencyProvider.GetValue(Type type, object? argument) {
             return this.GetValue( type, argument );
         }
         protected abstract Option<object?> GetValue(Type type, object? argument);

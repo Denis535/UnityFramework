@@ -8,10 +8,11 @@ namespace UnityEngine.Framework {
     using UnityEngine;
     using UnityEngine.UIElements;
 
-    public abstract class RootWidgetBase<TView> : ViewableWidgetBase2<TView> where TView : RootWidgetViewBase {
+    public abstract class RootWidgetBase<TView> : ViewableWidgetBase2<TView>
+        where TView : RootWidgetViewBase {
 
         // Constructor
-        public RootWidgetBase(IDependencyContainer container) : base( container ) {
+        public RootWidgetBase(IDependencyProvider provider) : base( provider ) {
         }
         public override void Dispose() {
             base.Dispose();
