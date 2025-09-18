@@ -1,9 +1,8 @@
 #nullable enable
-namespace UnityEngine {
+namespace System {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using UnityEngine;
 
     public interface IDependencyProvider {
 
@@ -25,7 +24,7 @@ namespace UnityEngine {
         }
         public sealed T RequireDependency<T>(Type type, object? argument = null) {
             var value = this.GetValue( type, argument );
-            Assert.Operation.Message( $"Dependency {typeof( T )} ({argument}) was not found" ).Valid( value.HasValue );
+            Assert.Operation.Message( $"Dependency {type} ({argument}) was not found" ).Valid( value.HasValue );
             return (T) value.Value!;
         }
 
