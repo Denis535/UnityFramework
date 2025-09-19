@@ -6,22 +6,15 @@ namespace System.TreeMachine.Pro {
 
     public abstract class TreeMachineBase {
 
-        // Constructor
-        internal TreeMachineBase() {
-        }
-
-    }
-    public abstract class TreeMachineBase<TRoot> : TreeMachineBase where TRoot : notnull, NodeBase {
-
         // Root
-        protected TRoot? Root { get; private set; }
+        protected INode? Root { get; private set; }
 
         // Constructor
         public TreeMachineBase() {
         }
 
         // SetRoot
-        protected virtual void SetRoot(TRoot? root, object? argument, Action<TRoot, object?>? callback) {
+        protected virtual void SetRoot(INode? root, object? argument, Action<INode, object?>? callback) {
             if (this.Root != null) {
                 this.RemoveRoot( this.Root, argument, callback );
             }
@@ -31,7 +24,7 @@ namespace System.TreeMachine.Pro {
         }
 
         // AddRoot
-        private void AddRoot(TRoot root, object? argument) {
+        private void AddRoot(INode root, object? argument) {
             Assert.Argument.Message( $"Argument 'root' must be non-null" ).NotNull( root != null );
             Assert.Argument.Message( $"Argument 'root' ({root}) must have no {root.Machine_NoRecursive} machine" ).Valid( root.Machine_NoRecursive == null );
             Assert.Argument.Message( $"Argument 'root' ({root}) must have no {root.Parent} parent" ).Valid( root.Parent == null );
@@ -42,7 +35,7 @@ namespace System.TreeMachine.Pro {
         }
 
         // RemoveRoot
-        private void RemoveRoot(TRoot root, object? argument, Action<TRoot, object?>? callback) {
+        private void RemoveRoot(INode root, object? argument, Action<INode, object?>? callback) {
             Assert.Argument.Message( $"Argument 'root' must be non-null" ).NotNull( root != null );
             Assert.Argument.Message( $"Argument 'root' ({root}) must have {this} machine" ).Valid( root.Machine_NoRecursive == this );
             Assert.Argument.Message( $"Argument 'root' ({root}) must have no {root.Parent} parent" ).Valid( root.Parent == null );

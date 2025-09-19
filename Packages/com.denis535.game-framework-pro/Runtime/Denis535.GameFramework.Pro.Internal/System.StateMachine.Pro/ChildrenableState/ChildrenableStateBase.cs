@@ -12,21 +12,14 @@ namespace System.StateMachine.Pro {
         private object? Owner { get; set; }
 
         // Machine
-        StateMachineBase? IState.Machine => this.Machine;
-        StateMachineBase? IState.Machine_NoRecursive => this.Machine_NoRecursive;
         public StateMachineBase? Machine => (this.Owner as StateMachineBase) ?? (this.Owner as IState)?.Machine;
         internal StateMachineBase? Machine_NoRecursive => this.Owner as StateMachineBase;
 
         // Root
-        bool IState.IsRoot => this.IsRoot;
-        IState IState.Root => this.Root;
         [MemberNotNullWhen( false, nameof( Parent ) )] public bool IsRoot => this.Parent == null;
         public IState Root => this.Parent?.Root ?? this;
 
         // Parent
-        IState? IState.Parent => this.Parent;
-        IEnumerable<IState> IState.Ancestors => this.Ancestors;
-        IEnumerable<IState> IState.AncestorsAndSelf => this.AncestorsAndSelf;
         public IState? Parent => this.Owner as IState;
         public IEnumerable<IState> Ancestors {
             get {
@@ -39,13 +32,9 @@ namespace System.StateMachine.Pro {
         public IEnumerable<IState> AncestorsAndSelf => this.Ancestors.Prepend( this );
 
         // Activity
-        Activity IState.Activity => this.Activity;
         public Activity Activity { get; private set; } = Activity.Inactive;
 
         // Children
-        IEnumerable<IState> IState.Children => this.ChildrenMutable;
-        IEnumerable<IState> IState.Descendants => this.Descendants;
-        IEnumerable<IState> IState.DescendantsAndSelf => this.DescendantsAndSelf;
         private List<IState> ChildrenMutable { get; } = new List<IState>( 0 );
         public IReadOnlyList<IState> Children => this.ChildrenMutable;
         public IEnumerable<IState> Descendants {
@@ -65,6 +54,27 @@ namespace System.StateMachine.Pro {
     }
     public abstract partial class ChildrenableStateBase {
 
+        // Machine
+        StateMachineBase? IState.Machine => this.Machine;
+        StateMachineBase? IState.Machine_NoRecursive => this.Machine_NoRecursive;
+
+        // Root
+        bool IState.IsRoot => this.IsRoot;
+        IState IState.Root => this.Root;
+
+        // Parent
+        IState? IState.Parent => this.Parent;
+        IEnumerable<IState> IState.Ancestors => this.Ancestors;
+        IEnumerable<IState> IState.AncestorsAndSelf => this.AncestorsAndSelf;
+
+        // Activity
+        Activity IState.Activity => this.Activity;
+
+        // Children
+        IEnumerable<IState> IState.Children => this.Children;
+        IEnumerable<IState> IState.Descendants => this.Descendants;
+        IEnumerable<IState> IState.DescendantsAndSelf => this.DescendantsAndSelf;
+
         // Attach
         void IState.Attach(StateMachineBase machine, object? argument) {
             this.Attach( machine, argument );
@@ -72,6 +82,29 @@ namespace System.StateMachine.Pro {
         void IState.Attach(IState parent, object? argument) {
             this.Attach( parent, argument );
         }
+
+        // Detach
+        void IState.Detach(StateMachineBase machine, object? argument) {
+            this.Detach( machine, argument );
+        }
+        void IState.Detach(IState parent, object? argument) {
+            this.Detach( parent, argument );
+        }
+
+        // Activate
+        void IState.Activate(object? argument) {
+            this.Activate( argument );
+        }
+
+        // Deactivate
+        void IState.Deactivate(object? argument) {
+            this.Deactivate( argument );
+        }
+
+    }
+    public abstract partial class ChildrenableStateBase {
+
+        // Attach
         internal void Attach(StateMachineBase machine, object? argument) {
             Assert.Argument.Message( $"Argument 'machine' must be non-null" ).NotNull( machine != null );
             Assert.Operation.Message( $"State {this} must have no {this.Machine_NoRecursive} machine" ).Valid( this.Machine_NoRecursive == null );
@@ -105,12 +138,6 @@ namespace System.StateMachine.Pro {
         }
 
         // Detach
-        void IState.Detach(StateMachineBase machine, object? argument) {
-            this.Detach( machine, argument );
-        }
-        void IState.Detach(IState parent, object? argument) {
-            this.Detach( parent, argument );
-        }
         internal void Detach(StateMachineBase machine, object? argument) {
             Assert.Argument.Message( $"Argument 'machine' must be non-null" ).NotNull( machine != null );
             Assert.Operation.Message( $"State {this} must have {machine} machine" ).Valid( this.Machine_NoRecursive == machine );
@@ -160,9 +187,6 @@ namespace System.StateMachine.Pro {
     public abstract partial class ChildrenableStateBase {
 
         // Activate
-        void IState.Activate(object? argument) {
-            this.Activate( argument );
-        }
         private void Activate(object? argument) {
             Assert.Operation.Message( $"State {this} must have owner" ).Valid( this.Machine_NoRecursive != null || this.Parent != null );
             Assert.Operation.Message( $"State {this} must have owner with valid activity" ).Valid( this.Machine_NoRecursive != null || this.Parent!.Activity is Activity.Active or Activity.Activating );
@@ -180,9 +204,6 @@ namespace System.StateMachine.Pro {
         }
 
         // Deactivate
-        void IState.Deactivate(object? argument) {
-            this.Deactivate( argument );
-        }
         private void Deactivate(object? argument) {
             Assert.Operation.Message( $"State {this} must have owner" ).Valid( this.Machine_NoRecursive != null || this.Parent != null );
             Assert.Operation.Message( $"State {this} must have owner with valid activity" ).Valid( this.Machine_NoRecursive != null || this.Parent!.Activity is Activity.Active or Activity.Deactivating );

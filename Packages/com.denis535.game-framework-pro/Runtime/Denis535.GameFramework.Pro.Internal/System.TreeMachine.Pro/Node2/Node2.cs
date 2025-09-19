@@ -7,7 +7,7 @@ namespace System.TreeMachine.Pro {
     public class Node2 : NodeBase2 {
 
         // Sort
-        public Action<List<NodeBase>>? SortDelegate { get; init; }
+        public Action<List<INode>>? SortDelegate { get; init; }
 
         // OnAttach
         public event Action<object?>? OnAttachCallback;
@@ -78,34 +78,34 @@ namespace System.TreeMachine.Pro {
         }
 
         // AddChild
-        public new void AddChild(NodeBase child, object? argument) {
+        public new void AddChild(INode child, object? argument) {
             base.AddChild( child, argument );
         }
-        public new void AddChildren(IEnumerable<NodeBase> children, object? argument) {
+        public new void AddChildren(IEnumerable<INode> children, object? argument) {
             base.AddChildren( children, argument );
         }
 
         // RemoveChild
-        public new void RemoveChild(NodeBase child, object? argument, Action<NodeBase, object?>? callback) {
+        public new void RemoveChild(INode child, object? argument, Action<INode, object?>? callback) {
             base.RemoveChild( child, argument, callback );
         }
-        public new bool RemoveChild(Func<NodeBase, bool> predicate, object? argument, Action<NodeBase, object?>? callback) {
+        public new bool RemoveChild(Func<INode, bool> predicate, object? argument, Action<INode, object?>? callback) {
             return base.RemoveChild( predicate, argument, callback );
         }
-        public new int RemoveChildren(Func<NodeBase, bool> predicate, object? argument, Action<NodeBase, object?>? callback) {
+        public new int RemoveChildren(Func<INode, bool> predicate, object? argument, Action<INode, object?>? callback) {
             return base.RemoveChildren( predicate, argument, callback );
         }
-        public new int RemoveChildren(object? argument, Action<NodeBase, object?>? callback) {
+        public new int RemoveChildren(object? argument, Action<INode, object?>? callback) {
             return base.RemoveChildren( argument, callback );
         }
 
         // RemoveSelf
-        public new void RemoveSelf(object? argument, Action<NodeBase, object?>? callback) {
+        public new void RemoveSelf(object? argument, Action<INode, object?>? callback) {
             base.RemoveSelf( argument, callback );
         }
 
         // Sort
-        protected override void Sort(List<NodeBase> children) {
+        protected override void Sort(List<INode> children) {
             this.SortDelegate?.Invoke( children );
         }
 

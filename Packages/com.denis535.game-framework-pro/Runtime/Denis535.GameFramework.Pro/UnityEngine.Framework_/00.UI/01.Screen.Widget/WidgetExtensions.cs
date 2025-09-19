@@ -10,29 +10,29 @@ namespace UnityEngine.Framework {
     public static class WidgetExtensions {
 
         // Widget
-        public static WidgetBase Widget(this NodeBase node) {
+        public static WidgetBase Widget(this INode node) {
             return ((Node2<WidgetBase>) node).UserData;
         }
-        public static T Widget<T>(this NodeBase node) where T : WidgetBase {
+        public static T Widget<T>(this INode node) where T : WidgetBase {
             return (T) ((Node2<WidgetBase>) node).UserData;
         }
 
         // GetCancellationToken
         public static CancellationToken GetCancellationToken_OnDetachCallback(this WidgetBase widget) {
             var cts = new CancellationTokenSource();
-            widget.Node.OnDetachCallback += Callback;
+            widget.NodeMutable.OnDetachCallback += Callback;
             void Callback(object? argument) {
                 cts.Cancel();
-                widget.Node.OnDetachCallback -= Callback;
+                widget.NodeMutable.OnDetachCallback -= Callback;
             }
             return cts.Token;
         }
         public static CancellationToken GetCancellationToken_OnDeactivateCallback(this WidgetBase widget) {
             var cts = new CancellationTokenSource();
-            widget.Node.OnDeactivateCallback += Callback;
+            widget.NodeMutable.OnDeactivateCallback += Callback;
             void Callback(object? argument) {
                 cts.Cancel();
-                widget.Node.OnDeactivateCallback -= Callback;
+                widget.NodeMutable.OnDeactivateCallback -= Callback;
             }
             return cts.Token;
         }

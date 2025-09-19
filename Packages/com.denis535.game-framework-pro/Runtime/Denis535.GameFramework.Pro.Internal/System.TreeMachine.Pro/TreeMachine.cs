@@ -4,22 +4,22 @@ namespace System.TreeMachine.Pro {
     using System.Collections.Generic;
     using System.Text;
 
-    public class TreeMachine<TRoot> : TreeMachineBase<TRoot> where TRoot : notnull, NodeBase {
+    public class TreeMachine : TreeMachineBase {
 
         // Root
-        public new TRoot? Root => base.Root;
+        public new INode? Root => base.Root;
 
         // Constructor
         public TreeMachine() {
         }
 
         // SetRoot
-        public new void SetRoot(TRoot? root, object? argument, Action<TRoot, object?>? callback) {
+        public new void SetRoot(INode? root, object? argument, Action<INode, object?>? callback) {
             base.SetRoot( root, argument, callback );
         }
 
     }
-    public class TreeMachine<TRoot, TUserData> : TreeMachine<TRoot> where TRoot : notnull, NodeBase {
+    public class TreeMachine<TUserData> : TreeMachine {
 
         // UserData
         public TUserData UserData { get; }

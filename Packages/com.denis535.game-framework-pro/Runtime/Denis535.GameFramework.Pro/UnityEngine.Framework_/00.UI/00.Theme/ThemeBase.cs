@@ -9,14 +9,14 @@ namespace UnityEngine.Framework {
     public abstract class ThemeBase : DisposableBase {
 
         // Machine
-        protected internal StateMachine<State<PlayListBase>, ThemeBase> Machine { get; }
+        protected internal StateMachine<ThemeBase> Machine { get; }
 
         // AudioSource
         protected internal AudioSource AudioSource { get; }
 
         // Constructor
         public ThemeBase(AudioSource audioSource) {
-            this.Machine = new StateMachine<State<PlayListBase>, ThemeBase>( this );
+            this.Machine = new StateMachine<ThemeBase>( this );
             this.AudioSource = audioSource;
         }
         public override void Dispose() {

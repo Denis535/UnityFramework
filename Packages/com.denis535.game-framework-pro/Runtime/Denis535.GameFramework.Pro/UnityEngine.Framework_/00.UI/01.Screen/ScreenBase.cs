@@ -10,7 +10,7 @@ namespace UnityEngine.Framework {
     public abstract class ScreenBase : DisposableBase {
 
         // Machine
-        protected internal TreeMachine<Node2<WidgetBase>, ScreenBase> Machine { get; }
+        protected internal TreeMachine<ScreenBase> Machine { get; }
 
         // Document
         protected internal UIDocument Document { get; }
@@ -19,7 +19,7 @@ namespace UnityEngine.Framework {
 
         // Constructor
         public ScreenBase(UIDocument document, AudioSource audioSource) {
-            this.Machine = new TreeMachine<Node2<WidgetBase>, ScreenBase>( this );
+            this.Machine = new TreeMachine<ScreenBase>( this );
             this.Document = document;
             this.AudioSource = audioSource;
         }

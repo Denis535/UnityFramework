@@ -34,7 +34,7 @@ namespace System.StateMachine.Pro {
 
         // Detach
         internal void Detach(StateMachineBase machine, object? argument);
-        internal void Detach(IState state, object? argument);
+        internal void Detach(IState parent, object? argument);
 
         // Activate
         internal void Activate(object? argument);

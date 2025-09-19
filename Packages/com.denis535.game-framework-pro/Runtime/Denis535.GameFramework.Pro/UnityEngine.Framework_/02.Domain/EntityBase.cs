@@ -21,19 +21,4 @@ namespace UnityEngine.Framework {
         //protected abstract void LateUpdate();
 
     }
-    // CharacterBase
-    public abstract class CharacterBase : EntityBase {
-    }
-    // MachineBase
-    public abstract class MachineBase : EntityBase {
-    }
-    // InteractiveBase
-    public abstract class InteractiveBase : EntityBase {
-    }
-    // CameraBase
-    public abstract class CameraBase : EntityBase {
-    }
-    // WorldBase
-    public abstract class WorldBase : EntityBase {
-    }
 }

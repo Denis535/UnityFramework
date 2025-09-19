@@ -27,7 +27,7 @@ namespace UnityEngine.Framework {
         }
 
         // Sort
-        protected override void Sort(List<NodeBase> children) {
+        protected override void Sort(List<INode> children) {
             children.Sort( (a, b) => Comparer<int>.Default.Compare( this.GetOrderOf( a.Widget() ), this.GetOrderOf( b.Widget() ) ) );
         }
         protected virtual int GetOrderOf(WidgetBase widget) {

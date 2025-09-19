@@ -6,22 +6,22 @@ namespace System.TreeMachine.Pro {
     using System.Linq;
     using System.Text;
 
-    public abstract partial class NodeBase {
+    public abstract partial class NodeBase : INode {
 
         // Owner
         private object? Owner { get; set; }
 
         // Machine
-        public TreeMachineBase? Machine => (this.Owner as TreeMachineBase) ?? (this.Owner as NodeBase)?.Machine;
+        public TreeMachineBase? Machine => (this.Owner as TreeMachineBase) ?? (this.Owner as INode)?.Machine;
         internal TreeMachineBase? Machine_NoRecursive => this.Owner as TreeMachineBase;
 
         // Root
         [MemberNotNullWhen( false, nameof( Parent ) )] public bool IsRoot => this.Parent == null;
-        public NodeBase Root => this.Parent?.Root ?? this;
+        public INode Root => this.Parent?.Root ?? this;
 
         // Parent
-        public NodeBase? Parent => this.Owner as NodeBase;
-        public IEnumerable<NodeBase> Ancestors {
+        public INode? Parent => this.Owner as INode;
+        public IEnumerable<INode> Ancestors {
             get {
                 if (this.Parent != null) {
                     yield return this.Parent;
@@ -29,15 +29,15 @@ namespace System.TreeMachine.Pro {
                 }
             }
         }
-        public IEnumerable<NodeBase> AncestorsAndSelf => this.Ancestors.Prepend( this );
+        public IEnumerable<INode> AncestorsAndSelf => this.Ancestors.Prepend( this );
 
         // Activity
         public Activity Activity { get; private set; } = Activity.Inactive;
 
         // Children
-        private List<NodeBase> ChildrenMutable { get; } = new List<NodeBase>( 0 );
-        public IReadOnlyList<NodeBase> Children => this.ChildrenMutable;
-        public IEnumerable<NodeBase> Descendants {
+        private List<INode> ChildrenMutable { get; } = new List<INode>( 0 );
+        public IReadOnlyList<INode> Children => this.ChildrenMutable;
+        public IEnumerable<INode> Descendants {
             get {
                 foreach (var child in this.Children) {
                     yield return child;
@@ -45,10 +45,60 @@ namespace System.TreeMachine.Pro {
                 }
             }
         }
-        public IEnumerable<NodeBase> DescendantsAndSelf => this.Descendants.Prepend( this );
+        public IEnumerable<INode> DescendantsAndSelf => this.Descendants.Prepend( this );
 
         // Constructor
         public NodeBase() {
+        }
+
+    }
+    public abstract partial class NodeBase {
+
+        // Machine
+        TreeMachineBase? INode.Machine => this.Machine;
+        TreeMachineBase? INode.Machine_NoRecursive => this.Machine_NoRecursive;
+
+        // Root
+        [MemberNotNullWhen( false, nameof( INode.Parent ) )] bool INode.IsRoot => this.IsRoot;
+        INode INode.Root => this.Root;
+
+        // Parent
+        INode? INode.Parent => this.Parent;
+        IEnumerable<INode> INode.Ancestors => this.Ancestors;
+        IEnumerable<INode> INode.AncestorsAndSelf => this.AncestorsAndSelf;
+
+        // Activity
+        Activity INode.Activity => this.Activity;
+
+        // Children
+        IEnumerable<INode> INode.Children => this.Children;
+        IEnumerable<INode> INode.Descendants => this.Descendants;
+        IEnumerable<INode> INode.DescendantsAndSelf => this.DescendantsAndSelf;
+
+        // Attach
+        void INode.Attach(TreeMachineBase machine, object? argument) {
+            this.Attach( machine, argument );
+        }
+        void INode.Attach(INode parent, object? argument) {
+            this.Attach( parent, argument );
+        }
+
+        // Detach
+        void INode.Detach(TreeMachineBase machine, object? argument) {
+            this.Detach( machine, argument );
+        }
+        void INode.Detach(INode parent, object? argument) {
+            this.Detach( parent, argument );
+        }
+
+        // Activate
+        void INode.Activate(object? argument) {
+            this.Activate( argument );
+        }
+
+        // Deactivate
+        void INode.Deactivate(object? argument) {
+            this.Deactivate( argument );
         }
 
     }
@@ -70,7 +120,7 @@ namespace System.TreeMachine.Pro {
                 this.Activate( argument );
             }
         }
-        private void Attach(NodeBase parent, object? argument) {
+        private void Attach(INode parent, object? argument) {
             Assert.Argument.Message( $"Argument 'parent' must be non-null" ).NotNull( parent != null );
             Assert.Operation.Message( $"Node {this} must have no {this.Machine_NoRecursive} machine" ).Valid( this.Machine_NoRecursive == null );
             Assert.Operation.Message( $"Node {this} must have no {this.Parent} parent" ).Valid( this.Parent == null );
@@ -101,7 +151,7 @@ namespace System.TreeMachine.Pro {
                 this.Owner = null;
             }
         }
-        private void Detach(NodeBase parent, object? argument) {
+        private void Detach(INode parent, object? argument) {
             Assert.Argument.Message( $"Argument 'parent' must be non-null" ).NotNull( parent != null );
             Assert.Operation.Message( $"Node {this} must have {parent} parent" ).Valid( this.Parent == parent );
             if (parent.Activity == Activity.Active) {
@@ -187,7 +237,7 @@ namespace System.TreeMachine.Pro {
     public abstract partial class NodeBase {
 
         // AddChild
-        protected virtual void AddChild(NodeBase child, object? argument) {
+        protected virtual void AddChild(INode child, object? argument) {
             Assert.Argument.Message( $"Argument 'child' must be non-null" ).NotNull( child != null );
             Assert.Argument.Message( $"Argument 'child' ({child}) must have no {child.Machine_NoRecursive} machine" ).Valid( child.Machine_NoRecursive == null );
             Assert.Argument.Message( $"Argument 'child' ({child}) must have no {child.Parent} parent" ).Valid( child.Parent == null );
@@ -197,7 +247,7 @@ namespace System.TreeMachine.Pro {
             this.Sort( this.ChildrenMutable );
             child.Attach( this, argument );
         }
-        protected void AddChildren(IEnumerable<NodeBase> children, object? argument) {
+        protected void AddChildren(IEnumerable<INode> children, object? argument) {
             Assert.Argument.Message( $"Argument 'children' must be non-null" ).NotNull( children != null );
             foreach (var child in children) {
                 this.AddChild( child, argument );
@@ -205,7 +255,7 @@ namespace System.TreeMachine.Pro {
         }
 
         // RemoveChild
-        protected virtual void RemoveChild(NodeBase child, object? argument, Action<NodeBase, object?>? callback) {
+        protected virtual void RemoveChild(INode child, object? argument, Action<INode, object?>? callback) {
             Assert.Argument.Message( $"Argument 'child' must be non-null" ).NotNull( child != null );
             Assert.Argument.Message( $"Argument 'child' ({child}) must have {this} parent" ).Valid( child.Parent == this );
             if (this.Activity == Activity.Active) {
@@ -218,7 +268,7 @@ namespace System.TreeMachine.Pro {
             _ = this.ChildrenMutable.Remove( child );
             callback?.Invoke( child, argument );
         }
-        protected bool RemoveChild(Func<NodeBase, bool> predicate, object? argument, Action<NodeBase, object?>? callback) {
+        protected bool RemoveChild(Func<INode, bool> predicate, object? argument, Action<INode, object?>? callback) {
             var child = this.Children.LastOrDefault( predicate );
             if (child != null) {
                 this.RemoveChild( child, argument, callback );
@@ -226,14 +276,14 @@ namespace System.TreeMachine.Pro {
             }
             return false;
         }
-        protected int RemoveChildren(Func<NodeBase, bool> predicate, object? argument, Action<NodeBase, object?>? callback) {
+        protected int RemoveChildren(Func<INode, bool> predicate, object? argument, Action<INode, object?>? callback) {
             var children = this.Children.Reverse().Where( predicate ).ToList();
             foreach (var child in children) {
                 this.RemoveChild( child, argument, callback );
             }
             return children.Count;
         }
-        protected int RemoveChildren(object? argument, Action<NodeBase, object?>? callback) {
+        protected int RemoveChildren(object? argument, Action<INode, object?>? callback) {
             var children = this.Children.Reverse().ToList();
             foreach (var child in children) {
                 this.RemoveChild( child, argument, callback );
@@ -242,13 +292,13 @@ namespace System.TreeMachine.Pro {
         }
 
         // RemoveSelf
-        protected void RemoveSelf(object? argument, Action<NodeBase, object?>? callback) {
+        protected void RemoveSelf(object? argument, Action<INode, object?>? callback) {
             Assert.Operation.Message( $"Node {this} must have parent" ).Valid( this.Parent != null );
-            this.Parent.RemoveChild( this, argument, callback );
+            ((NodeBase) this.Parent).RemoveChild( this, argument, callback );
         }
 
         // Sort
-        protected virtual void Sort(List<NodeBase> children) {
+        protected virtual void Sort(List<INode> children) {
             //children.Sort( (a, b) => Comparer<int>.Default.Compare( GetOrderOf( a ), GetOrderOf( b ) ) );
         }
 

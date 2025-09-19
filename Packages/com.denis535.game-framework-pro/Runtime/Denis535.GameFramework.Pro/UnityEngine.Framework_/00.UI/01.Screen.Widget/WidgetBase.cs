@@ -10,16 +10,17 @@ namespace UnityEngine.Framework {
 
     public abstract class WidgetBase : DisposableBase {
 
-        // Node
-        public Node2<WidgetBase> Node { get; }
         // Screen
         protected ScreenBase Screen {
             get {
                 Assert.Operation.Message( $"Widget {this} must be non-disposed" ).NotDisposed( !this.IsDisposed );
                 Assert.Operation.Message( $"Widget {this} must be active or activating or deactivating" ).Valid( this.Node.Activity is Activity.Active or Activity.Activating or Activity.Deactivating );
-                return ((TreeMachine<Node2<WidgetBase>, ScreenBase>?) this.Node.Machine)!.UserData;
+                return ((TreeMachine<ScreenBase>?) this.Node.Machine)!.UserData;
             }
         }
+        // Node
+        public INode Node => this.NodeMutable;
+        public Node2<WidgetBase> NodeMutable { get; }
 
         // Document
         protected UIDocument Document => this.Screen.Document;
@@ -28,15 +29,15 @@ namespace UnityEngine.Framework {
 
         // Constructor
         public WidgetBase() {
-            this.Node = new Node2<WidgetBase>( this ) {
+            this.NodeMutable = new Node2<WidgetBase>( this ) {
                 SortDelegate = this.Sort
             };
-            this.Node.OnActivateCallback += this.OnActivate;
-            this.Node.OnDeactivateCallback += this.OnDeactivate;
-            this.Node.OnBeforeDescendantActivateCallback += this.OnBeforeDescendantActivate;
-            this.Node.OnAfterDescendantActivateCallback += this.OnAfterDescendantActivate;
-            this.Node.OnBeforeDescendantDeactivateCallback += this.OnBeforeDescendantDeactivate;
-            this.Node.OnAfterDescendantDeactivateCallback += this.OnAfterDescendantDeactivate;
+            this.NodeMutable.OnActivateCallback += this.OnActivate;
+            this.NodeMutable.OnDeactivateCallback += this.OnDeactivate;
+            this.NodeMutable.OnBeforeDescendantActivateCallback += this.OnBeforeDescendantActivate;
+            this.NodeMutable.OnAfterDescendantActivateCallback += this.OnAfterDescendantActivate;
+            this.NodeMutable.OnBeforeDescendantDeactivateCallback += this.OnBeforeDescendantDeactivate;
+            this.NodeMutable.OnAfterDescendantDeactivateCallback += this.OnAfterDescendantDeactivate;
         }
         public override void Dispose() {
             Assert.Operation.Message( $"Widget {this} must be inactive" ).Valid( this.Node.Activity is Activity.Inactive );
@@ -59,7 +60,7 @@ namespace UnityEngine.Framework {
         }
 
         // Sort
-        protected virtual void Sort(List<NodeBase> children) {
+        protected virtual void Sort(List<INode> children) {
         }
 
     }

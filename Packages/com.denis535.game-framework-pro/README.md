@@ -4,7 +4,7 @@ The framework that allows you to design high-quality architecture of your game p
 # Reference
 The package contains the following modules:
 - GameFramework.Pro - the main module.
-- GameFramework.Pro.Additions - the additional module with extensions.
+- GameFramework.Pro.Extensions - the additional module with extensions.
 - GameFramework.Pro.Internal - the low-level module with utilities and helpers.
 
 The package contains the following namespaces and types:
@@ -12,8 +12,8 @@ The package contains the following namespaces and types:
     - Program - the program entity.
 - Framework.UI - the presentation subject area namespace.
     - Theme - the audio theme entity.
-    - Screen - the graphics screen entity. It contains the widget tree and the visual element tree.
     - PlayList - the audio playlist.
+    - Screen - the graphics screen entity. It contains the widget tree and the visual element tree.
     - Widget - the graphics widget. It may contain the view.
     - View - the visual element. It is just the VisualElement.
     - Router - the application manager service. It can load, reload, unload the scenes and quit the application.
@@ -23,11 +23,6 @@ The package contains the following namespaces and types:
     - Game - the game entity. It contains informations, rules and states.
     - Player - the player entity. It contains informations and states.
     - Entity - the entity (any scene object). It contains informations, logic and states.
-        - Character
-        - Machine
-        - Interactive
-        - Camera
-        - World
 
 # Media
 - [![YouTube](https://img.youtube.com/vi/ERAgdyVVXUw/0.jpg)](https://youtu.be/ERAgdyVVXUw)
