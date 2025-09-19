@@ -83,22 +83,27 @@ namespace UnityEngine.Framework {
             this.ThrowIfInvalid();
             if (typeof( TTheme ).IsAssignableFrom( type )) {
                 Assert.Operation.Message( $"Theme must be non-null" ).Valid( this.Theme != null );
+                Assert.Operation.Message( $"Theme must be non-disposed" ).NotDisposed( !this.Theme.IsDisposed );
                 return Option.Create<object?>( this.Theme );
             }
             if (typeof( TScreen ).IsAssignableFrom( type )) {
                 Assert.Operation.Message( $"Screen must be non-null" ).Valid( this.Screen != null );
+                Assert.Operation.Message( $"Screen must be non-disposed" ).NotDisposed( !this.Screen.IsDisposed );
                 return Option.Create<object?>( this.Screen );
             }
             if (typeof( TRouter ).IsAssignableFrom( type )) {
                 Assert.Operation.Message( $"Router must be non-null" ).Valid( this.Router != null );
+                Assert.Operation.Message( $"Router must be non-disposed" ).NotDisposed( !this.Router.IsDisposed );
                 return Option.Create<object?>( this.Router );
             }
             if (typeof( TApplication ).IsAssignableFrom( type )) {
                 Assert.Operation.Message( $"Application must be non-null" ).Valid( this.Application != null );
+                Assert.Operation.Message( $"Application must be non-disposed" ).NotDisposed( !this.Application.IsDisposed );
                 return Option.Create<object?>( this.Application );
             }
             if (typeof( TGame ).IsAssignableFrom( type )) {
                 Assert.Operation.Message( $"Game must be non-null" ).Valid( this.Game != null );
+                Assert.Operation.Message( $"Game must be non-disposed" ).NotDisposed( !this.Game.IsDisposed );
                 return Option.Create<object?>( this.Game );
             }
             return default;

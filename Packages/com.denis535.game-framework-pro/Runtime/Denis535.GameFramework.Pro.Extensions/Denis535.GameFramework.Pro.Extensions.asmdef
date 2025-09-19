@@ -1,5 +1,5 @@
 {
-    "name": "Denis535.GameFramework.Pro.Additions",
+    "name": "Denis535.GameFramework.Pro.Extensions",
     "rootNamespace": "UnityEngine",
     "references": [
         "GUID:731a9b95dc199d44ba478bacf32edbf2",

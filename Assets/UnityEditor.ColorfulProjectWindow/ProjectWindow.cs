@@ -32,15 +32,11 @@ namespace UnityEditor.ColorfulProjectWindow {
 
         // DrawElement
         protected override void DrawElement(Rect rect, string path) {
-            if (path.Equals( "Assets/Assets" ) || path.StartsWith( "Assets/Assets/" )) {
-                Highlight( rect, this.Settings.AssetsColor, path.Count( i => i == '/' ) >= 2 );
-                return;
-            }
-            if (path.StartsWith( "Assets/Assets." )) {
-                Highlight( rect, this.Settings.AssetsColor, path.Count( i => i == '/' ) >= 2 );
-                return;
-            }
             base.DrawElement( rect, path );
+            if (path.Equals( "Assets/Assets" ) || path.StartsWith( "Assets/Assets/" ) || path.StartsWith( "Assets/Assets." )) {
+                Highlight( rect, this.Settings.AssetsColor, path.Count( i => i == '/' ) >= 2 );
+                return;
+            }
         }
 
         // DrawPackage
@@ -92,7 +88,7 @@ namespace UnityEditor.ColorfulProjectWindow {
                 if (IsMatch( path, "Packages/com.denis535.game-framework-pro/Runtime/Denis535.GameFramework.Pro", out assembly, out content )) {
                     return true;
                 }
-                if (IsMatch( path, "Packages/com.denis535.game-framework-pro/Runtime/Denis535.GameFramework.Pro.Additions", out assembly, out content )) {
+                if (IsMatch( path, "Packages/com.denis535.game-framework-pro/Runtime/Denis535.GameFramework.Pro.Extensions", out assembly, out content )) {
                     return true;
                 }
                 if (IsMatch( path, "Packages/com.denis535.game-framework-pro/Runtime/Denis535.GameFramework.Pro.Internal", out assembly, out content )) {
