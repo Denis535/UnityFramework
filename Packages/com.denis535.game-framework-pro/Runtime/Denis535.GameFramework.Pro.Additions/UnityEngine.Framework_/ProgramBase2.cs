@@ -81,28 +81,25 @@ namespace UnityEngine.Framework {
         // GetValue
         protected override Option<object?> GetValue(Type type, object? argument) {
             this.ThrowIfInvalid();
-            // UI
-            if (type == typeof( TTheme )) {
-                if (this.Theme != null) return Option.Create( (object?) this.Theme );
-                return default;
+            if (typeof( TTheme ).IsAssignableFrom( type )) {
+                Assert.Operation.Message( $"Theme must be non-null" ).Valid( this.Theme != null );
+                return Option.Create<object?>( this.Theme );
             }
-            if (type == typeof( TScreen )) {
-                if (this.Screen != null) return Option.Create( (object?) this.Screen );
-                return default;
+            if (typeof( TScreen ).IsAssignableFrom( type )) {
+                Assert.Operation.Message( $"Screen must be non-null" ).Valid( this.Screen != null );
+                return Option.Create<object?>( this.Screen );
             }
-            if (type == typeof( TRouter )) {
-                if (this.Router != null) return Option.Create( (object?) this.Router );
-                return default;
+            if (typeof( TRouter ).IsAssignableFrom( type )) {
+                Assert.Operation.Message( $"Router must be non-null" ).Valid( this.Router != null );
+                return Option.Create<object?>( this.Router );
             }
-            // App
-            if (type == typeof( TApplication )) {
-                if (this.Application != null) return Option.Create( (object?) this.Application );
-                return default;
+            if (typeof( TApplication ).IsAssignableFrom( type )) {
+                Assert.Operation.Message( $"Application must be non-null" ).Valid( this.Application != null );
+                return Option.Create<object?>( this.Application );
             }
-            // Game
-            if (type == typeof( TGame )) {
-                if (this.Game != null) return Option.Create( (object?) this.Game );
-                return default;
+            if (typeof( TGame ).IsAssignableFrom( type )) {
+                Assert.Operation.Message( $"Game must be non-null" ).Valid( this.Game != null );
+                return Option.Create<object?>( this.Game );
             }
             return default;
         }
