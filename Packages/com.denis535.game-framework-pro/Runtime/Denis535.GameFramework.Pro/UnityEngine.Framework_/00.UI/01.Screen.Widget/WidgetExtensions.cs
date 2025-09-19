@@ -13,7 +13,7 @@ namespace UnityEngine.Framework {
         public static WidgetBase Widget(this INode node) {
             return ((Node2<WidgetBase>) node).UserData;
         }
-        public static T Widget<T>(this INode node) where T : WidgetBase {
+        public static T Widget<T>(this INode node) where T : notnull, WidgetBase {
             return (T) ((Node2<WidgetBase>) node).UserData;
         }
 

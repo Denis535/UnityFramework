@@ -20,7 +20,7 @@ namespace UnityEngine.Framework {
         }
         // State
         public IState State => this.StateMutable;
-        public State<PlayListBase> StateMutable { get; }
+        protected internal State<PlayListBase> StateMutable { get; }
 
         // AudioSource
         protected AudioSource AudioSource => this.Theme.AudioSource;

@@ -13,7 +13,7 @@ namespace UnityEngine.Framework {
         public static PlayListBase PlayList(this IState state) {
             return ((State<PlayListBase>) state).UserData;
         }
-        public static T PlayList<T>(this IState state) where T : PlayListBase {
+        public static T PlayList<T>(this IState state) where T : notnull, PlayListBase {
             return (T) ((State<PlayListBase>) state).UserData;
         }
 

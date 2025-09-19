@@ -20,7 +20,7 @@ namespace UnityEngine.Framework {
         }
         // Node
         public INode Node => this.NodeMutable;
-        public Node2<WidgetBase> NodeMutable { get; }
+        protected internal Node2<WidgetBase> NodeMutable { get; }
 
         // Document
         protected UIDocument Document => this.Screen.Document;
