@@ -14,12 +14,13 @@ namespace UnityEngine.Framework {
         protected ThemeBase Theme {
             get {
                 Assert.Operation.Message( $"PlayList {this} must be non-disposed" ).NotDisposed( !this.IsDisposed );
-                Assert.Operation.Message( $"PlayList {this} must be active or activating or deactivating" ).Valid( this.State.Activity is Activity.Active or Activity.Activating or Activity.Deactivating );
-                return ((IUserData<ThemeBase>?) this.State.Machine)!.UserData;
+                Assert.Operation.Message( $"PlayList {this} must be active or activating or deactivating" ).Valid( this.StateMutable.Activity is Activity.Active or Activity.Activating or Activity.Deactivating );
+                return ((IUserData<ThemeBase>?) this.StateMutable.Machine)!.UserData;
             }
         }
         // State
-        protected internal State<PlayListBase> State { get; }
+        public IState State => this.StateMutable;
+        protected internal State<PlayListBase> StateMutable { get; }
 
         // AudioSource
         protected AudioSource AudioSource => this.Theme.AudioSource;
@@ -83,12 +84,12 @@ namespace UnityEngine.Framework {
 
         // Constructor
         public PlayListBase() {
-            this.State = new State<PlayListBase>( this );
-            this.State.OnActivateCallback += this.OnActivate;
-            this.State.OnDeactivateCallback += this.OnDeactivate;
+            this.StateMutable = new State<PlayListBase>( this );
+            this.StateMutable.OnActivateCallback += this.OnActivate;
+            this.StateMutable.OnDeactivateCallback += this.OnDeactivate;
         }
         public override void Dispose() {
-            Assert.Operation.Message( $"PlayList {this} must be inactive" ).Valid( this.State.Activity is Activity.Inactive );
+            Assert.Operation.Message( $"PlayList {this} must be inactive" ).Valid( this.StateMutable.Activity is Activity.Inactive );
             base.Dispose();
         }
 

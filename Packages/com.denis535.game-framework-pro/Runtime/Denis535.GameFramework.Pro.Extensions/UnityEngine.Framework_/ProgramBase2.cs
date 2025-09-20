@@ -163,7 +163,7 @@ namespace UnityEngine.Framework {
         }
         protected static string? GetDisplayString(WidgetBase widget) {
             var builder = new StringBuilder();
-            _ = builder.AppendHierarchy( widget, i => i.ToString(), i => i.Node.Children.Select( i => i.Widget() ) );
+            _ = builder.AppendHierarchy( widget, i => i.ToString(), i => i.NodeMutable.Children.Select( i => i.Widget() ) );
             return builder.ToString();
         }
         protected static string? GetDisplayString(ViewBase view) {

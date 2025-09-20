@@ -14,12 +14,13 @@ namespace UnityEngine.Framework {
         protected ScreenBase Screen {
             get {
                 Assert.Operation.Message( $"Widget {this} must be non-disposed" ).NotDisposed( !this.IsDisposed );
-                Assert.Operation.Message( $"Widget {this} must be active or activating or deactivating" ).Valid( this.Node.Activity is Activity.Active or Activity.Activating or Activity.Deactivating );
-                return ((IUserData<ScreenBase>?) this.Node.Machine)!.UserData;
+                Assert.Operation.Message( $"Widget {this} must be active or activating or deactivating" ).Valid( this.NodeMutable.Activity is Activity.Active or Activity.Activating or Activity.Deactivating );
+                return ((IUserData<ScreenBase>?) this.NodeMutable.Machine)!.UserData;
             }
         }
         // Node
-        protected internal Node2<WidgetBase> Node { get; }
+        public INode2 Node => this.NodeMutable;
+        protected internal Node2<WidgetBase> NodeMutable { get; }
 
         // Document
         protected UIDocument Document => this.Screen.Document;
@@ -28,19 +29,19 @@ namespace UnityEngine.Framework {
 
         // Constructor
         public WidgetBase() {
-            this.Node = new Node2<WidgetBase>( this ) {
+            this.NodeMutable = new Node2<WidgetBase>( this ) {
                 SortDelegate = this.Sort
             };
-            this.Node.OnActivateCallback += this.OnActivate;
-            this.Node.OnDeactivateCallback += this.OnDeactivate;
-            this.Node.OnBeforeDescendantActivateCallback += this.OnBeforeDescendantActivate;
-            this.Node.OnAfterDescendantActivateCallback += this.OnAfterDescendantActivate;
-            this.Node.OnBeforeDescendantDeactivateCallback += this.OnBeforeDescendantDeactivate;
-            this.Node.OnAfterDescendantDeactivateCallback += this.OnAfterDescendantDeactivate;
+            this.NodeMutable.OnActivateCallback += this.OnActivate;
+            this.NodeMutable.OnDeactivateCallback += this.OnDeactivate;
+            this.NodeMutable.OnBeforeDescendantActivateCallback += this.OnBeforeDescendantActivate;
+            this.NodeMutable.OnAfterDescendantActivateCallback += this.OnAfterDescendantActivate;
+            this.NodeMutable.OnBeforeDescendantDeactivateCallback += this.OnBeforeDescendantDeactivate;
+            this.NodeMutable.OnAfterDescendantDeactivateCallback += this.OnAfterDescendantDeactivate;
         }
         public override void Dispose() {
-            Assert.Operation.Message( $"Widget {this} must be inactive" ).Valid( this.Node.Activity is Activity.Inactive );
-            Assert.Operation.Message( $"Widget/Children {this} must be disposed" ).Valid( this.Node.Children.All( i => i.Widget().IsDisposed ) );
+            Assert.Operation.Message( $"Widget {this} must be inactive" ).Valid( this.NodeMutable.Activity is Activity.Inactive );
+            Assert.Operation.Message( $"Widget/Children {this} must be disposed" ).Valid( this.NodeMutable.Children.All( i => i.Widget().IsDisposed ) );
             base.Dispose();
         }
 
@@ -90,12 +91,12 @@ namespace UnityEngine.Framework {
         // ShowSelf
         protected virtual void ShowSelf() {
             Assert.Operation.Message( $"Widget {this} must be non-disposed" ).NotDisposed( !this.IsDisposed );
-            Assert.Operation.Message( $"Widget {this} must be non-root" ).NotDisposed( !this.Node.IsRoot );
+            Assert.Operation.Message( $"Widget {this} must be non-root" ).NotDisposed( !this.NodeMutable.IsRoot );
             this.ShowViewRecursive( this.View );
         }
         protected virtual void HideSelf() {
             Assert.Operation.Message( $"Widget {this} must be non-disposed" ).NotDisposed( !this.IsDisposed );
-            Assert.Operation.Message( $"Widget {this} must be non-root" ).NotDisposed( !this.Node.IsRoot );
+            Assert.Operation.Message( $"Widget {this} must be non-root" ).NotDisposed( !this.NodeMutable.IsRoot );
             this.HideViewRecursive( this.View );
         }
 
@@ -158,8 +159,8 @@ namespace UnityEngine.Framework {
             if (widget is ViewableWidgetBase widget_ && widget_.View.TryAddView( view )) {
                 return true;
             }
-            if (widget.Node.Parent != null) {
-                return TryShowViewRecursive( widget.Node.Parent.Widget(), view );
+            if (widget.NodeMutable.Parent != null) {
+                return TryShowViewRecursive( widget.NodeMutable.Parent.Widget(), view );
             }
             return false;
         }
@@ -170,8 +171,8 @@ namespace UnityEngine.Framework {
             if (widget is ViewableWidgetBase widget_ && widget_.View.TryRemoveView( view )) {
                 return true;
             }
-            if (widget.Node.Parent != null) {
-                return TryHideViewRecursive( widget.Node.Parent.Widget(), view );
+            if (widget.NodeMutable.Parent != null) {
+                return TryHideViewRecursive( widget.NodeMutable.Parent.Widget(), view );
             }
             return false;
         }
