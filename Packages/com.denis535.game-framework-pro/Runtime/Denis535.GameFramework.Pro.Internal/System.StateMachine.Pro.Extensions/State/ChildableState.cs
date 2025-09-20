@@ -40,7 +40,7 @@ namespace System.StateMachine.Pro {
         }
 
     }
-    public class ChildableState<TUserData> : ChildableState {
+    public class ChildableState<TUserData> : ChildableState, IUserData<TUserData> {
 
         // UserData
         public TUserData UserData { get; }

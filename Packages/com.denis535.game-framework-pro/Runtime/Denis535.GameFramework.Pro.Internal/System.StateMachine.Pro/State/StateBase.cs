@@ -88,6 +88,50 @@ namespace System.StateMachine.Pro {
             this.Deactivate( argument );
         }
 
+        // OnAttach
+        void IState.OnAttach(object? argument) {
+            this.OnAttach( argument );
+        }
+        void IState.OnBeforeAttach(object? argument) {
+            this.OnBeforeAttach( argument );
+        }
+        void IState.OnAfterAttach(object? argument) {
+            this.OnAfterAttach( argument );
+        }
+
+        // OnDetach
+        void IState.OnDetach(object? argument) {
+            this.OnDetach( argument );
+        }
+        void IState.OnBeforeDetach(object? argument) {
+            this.OnBeforeDetach( argument );
+        }
+        void IState.OnAfterDetach(object? argument) {
+            this.OnAfterDetach( argument );
+        }
+
+        // OnActivate
+        void IState.OnActivate(object? argument) {
+            this.OnActivate( argument );
+        }
+        void IState.OnBeforeActivate(object? argument) {
+            this.OnBeforeActivate( argument );
+        }
+        void IState.OnAfterActivate(object? argument) {
+            this.OnAfterActivate( argument );
+        }
+
+        // OnDeactivate
+        void IState.OnDeactivate(object? argument) {
+            this.OnDeactivate( argument );
+        }
+        void IState.OnBeforeDeactivate(object? argument) {
+            this.OnBeforeDeactivate( argument );
+        }
+        void IState.OnAfterDeactivate(object? argument) {
+            this.OnAfterDeactivate( argument );
+        }
+
     }
     public abstract partial class StateBase {
 
@@ -187,7 +231,7 @@ namespace System.StateMachine.Pro {
             }
         }
 
-        // Deactivate
+        // Deactivates
         private void Deactivate(object? argument) {
             Assert.Operation.Message( $"State {this} must have owner" ).Valid( this.Machine_NoRecursive != null || this.Parent != null );
             Assert.Operation.Message( $"State {this} must have owner with valid activity" ).Valid( this.Machine_NoRecursive != null || this.Parent!.Activity is Activity.Active or Activity.Deactivating );

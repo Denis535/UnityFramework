@@ -1,13 +1,13 @@
 ﻿#nullable enable
-namespace System.StateMachine.Pro {
+namespace System.TreeMachine.Pro {
     using System;
     using System.Collections.Generic;
     using System.Text;
 
-    public class ChildrenableState : ChildrenableStateBase {
+    public class Node : NodeBase {
 
         // Sort
-        public Action<List<IState>>? SortDelegate { get; init; }
+        public Action<List<INode>>? SortDelegate { get; init; }
 
         // OnAttach
         public event Action<object?>? OnAttachCallback;
@@ -18,7 +18,7 @@ namespace System.StateMachine.Pro {
         public event Action<object?>? OnDeactivateCallback;
 
         // Constructor
-        public ChildrenableState() {
+        public Node() {
         }
 
         // OnAttach
@@ -38,40 +38,45 @@ namespace System.StateMachine.Pro {
         }
 
         // AddChild
-        public new void AddChild(IState child, object? argument) {
+        public new void AddChild(INode child, object? argument) {
             base.AddChild( child, argument );
         }
-        public new void AddChildren(IEnumerable<IState> children, object? argument) {
+        public new void AddChildren(IEnumerable<INode> children, object? argument) {
             base.AddChildren( children, argument );
         }
 
         // RemoveChild
-        public new void RemoveChild(IState child, object? argument, Action<IState, object?>? callback) {
+        public new void RemoveChild(INode child, object? argument, Action<INode, object?>? callback) {
             base.RemoveChild( child, argument, callback );
         }
-        public new bool RemoveChild(Func<IState, bool> predicate, object? argument, Action<IState, object?>? callback) {
+        public new bool RemoveChild(Func<INode, bool> predicate, object? argument, Action<INode, object?>? callback) {
             return base.RemoveChild( predicate, argument, callback );
         }
-        public new int RemoveChildren(Func<IState, bool> predicate, object? argument, Action<IState, object?>? callback) {
+        public new int RemoveChildren(Func<INode, bool> predicate, object? argument, Action<INode, object?>? callback) {
             return base.RemoveChildren( predicate, argument, callback );
         }
-        public new int RemoveChildren(object? argument, Action<IState, object?>? callback) {
+        public new int RemoveChildren(object? argument, Action<INode, object?>? callback) {
             return base.RemoveChildren( argument, callback );
         }
 
+        // RemoveSelf
+        public new void RemoveSelf(object? argument, Action<INode, object?>? callback) {
+            base.RemoveSelf( argument, callback );
+        }
+
         // Sort
-        protected override void Sort(List<IState> children) {
+        protected override void Sort(List<INode> children) {
             this.SortDelegate?.Invoke( children );
         }
 
     }
-    public class ChildrenableState<TUserData> : ChildrenableState {
+    public class Node<TUserData> : Node, IUserData<TUserData> {
 
         // UserData
         public TUserData UserData { get; }
 
         // Constructor
-        public ChildrenableState(TUserData userData) {
+        public Node(TUserData userData) {
             this.UserData = userData;
         }
 

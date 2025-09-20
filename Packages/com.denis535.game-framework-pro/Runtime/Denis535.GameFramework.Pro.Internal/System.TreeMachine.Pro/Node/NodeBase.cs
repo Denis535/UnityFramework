@@ -35,8 +35,8 @@ namespace System.TreeMachine.Pro {
         public Activity Activity { get; private set; } = Activity.Inactive;
 
         // Children
-        private List<INode> ChildrenMutable { get; } = new List<INode>( 0 );
         public IReadOnlyList<INode> Children => this.ChildrenMutable;
+        private List<INode> ChildrenMutable { get; } = new List<INode>( 0 );
         public IEnumerable<INode> Descendants {
             get {
                 foreach (var child in this.Children) {
@@ -99,6 +99,50 @@ namespace System.TreeMachine.Pro {
         // Deactivate
         void INode.Deactivate(object? argument) {
             this.Deactivate( argument );
+        }
+
+        // OnAttach
+        void INode.OnAttach(object? argument) {
+            this.OnAttach( argument );
+        }
+        void INode.OnBeforeAttach(object? argument) {
+            this.OnBeforeAttach( argument );
+        }
+        void INode.OnAfterAttach(object? argument) {
+            this.OnAfterAttach( argument );
+        }
+
+        // OnDetach
+        void INode.OnDetach(object? argument) {
+            this.OnDetach( argument );
+        }
+        void INode.OnBeforeDetach(object? argument) {
+            this.OnBeforeDetach( argument );
+        }
+        void INode.OnAfterDetach(object? argument) {
+            this.OnAfterDetach( argument );
+        }
+
+        // OnActivate
+        void INode.OnActivate(object? argument) {
+            this.OnActivate( argument );
+        }
+        void INode.OnBeforeActivate(object? argument) {
+            this.OnBeforeActivate( argument );
+        }
+        void INode.OnAfterActivate(object? argument) {
+            this.OnAfterActivate( argument );
+        }
+
+        // OnDeactivate
+        void INode.OnDeactivate(object? argument) {
+            this.OnDeactivate( argument );
+        }
+        void INode.OnBeforeDeactivate(object? argument) {
+            this.OnBeforeDeactivate( argument );
+        }
+        void INode.OnAfterDeactivate(object? argument) {
+            this.OnAfterDeactivate( argument );
         }
 
     }

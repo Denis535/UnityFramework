@@ -11,28 +11,48 @@ namespace UnityEngine.Framework {
 
         // Widget
         public static WidgetBase Widget(this INode node) {
-            return ((Node2<WidgetBase>) node).UserData;
+            return ((IUserData<WidgetBase>) node).UserData;
         }
         public static T Widget<T>(this INode node) where T : notnull, WidgetBase {
-            return (T) ((Node2<WidgetBase>) node).UserData;
+            return (T) ((IUserData<WidgetBase>) node).UserData;
         }
 
         // GetCancellationToken
-        public static CancellationToken GetCancellationToken_OnDetachCallback(this WidgetBase widget) {
+        public static CancellationToken GetCancellationToken_OnDetachCallback(this Node node) {
             var cts = new CancellationTokenSource();
-            widget.NodeMutable.OnDetachCallback += Callback;
+            node.OnDetachCallback += Callback;
             void Callback(object? argument) {
                 cts.Cancel();
-                widget.NodeMutable.OnDetachCallback -= Callback;
+                node.OnDetachCallback -= Callback;
             }
             return cts.Token;
         }
-        public static CancellationToken GetCancellationToken_OnDeactivateCallback(this WidgetBase widget) {
+        public static CancellationToken GetCancellationToken_OnDeactivateCallback(this Node node) {
             var cts = new CancellationTokenSource();
-            widget.NodeMutable.OnDeactivateCallback += Callback;
+            node.OnDeactivateCallback += Callback;
             void Callback(object? argument) {
                 cts.Cancel();
-                widget.NodeMutable.OnDeactivateCallback -= Callback;
+                node.OnDeactivateCallback -= Callback;
+            }
+            return cts.Token;
+        }
+
+        // GetCancellationToken
+        public static CancellationToken GetCancellationToken_OnDetachCallback(this Node2 node) {
+            var cts = new CancellationTokenSource();
+            node.OnDetachCallback += Callback;
+            void Callback(object? argument) {
+                cts.Cancel();
+                node.OnDetachCallback -= Callback;
+            }
+            return cts.Token;
+        }
+        public static CancellationToken GetCancellationToken_OnDeactivateCallback(this Node2 node) {
+            var cts = new CancellationTokenSource();
+            node.OnDeactivateCallback += Callback;
+            void Callback(object? argument) {
+                cts.Cancel();
+                node.OnDeactivateCallback -= Callback;
             }
             return cts.Token;
         }

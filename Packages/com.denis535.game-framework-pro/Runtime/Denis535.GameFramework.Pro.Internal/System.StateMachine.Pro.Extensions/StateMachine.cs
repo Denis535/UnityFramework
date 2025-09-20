@@ -19,7 +19,7 @@ namespace System.StateMachine.Pro {
         }
 
     }
-    public class StateMachine<TUserData> : StateMachine {
+    public class StateMachine<TUserData> : StateMachine, IUserData<TUserData> {
 
         // UserData
         public TUserData UserData { get; }

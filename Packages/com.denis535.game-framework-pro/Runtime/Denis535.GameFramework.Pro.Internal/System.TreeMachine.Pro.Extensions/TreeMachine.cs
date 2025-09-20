@@ -19,7 +19,7 @@ namespace System.TreeMachine.Pro {
         }
 
     }
-    public class TreeMachine<TUserData> : TreeMachine {
+    public class TreeMachine<TUserData> : TreeMachine, IUserData<TUserData> {
 
         // UserData
         public TUserData UserData { get; }

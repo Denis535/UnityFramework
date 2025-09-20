@@ -42,5 +42,25 @@ namespace System.StateMachine.Pro {
         // Deactivate
         internal void Deactivate(object? argument);
 
+        // OnAttach
+        internal void OnAttach(object? argument);
+        internal void OnBeforeAttach(object? argument);
+        internal void OnAfterAttach(object? argument);
+
+        // OnDetach
+        internal void OnDetach(object? argument);
+        internal void OnBeforeDetach(object? argument);
+        internal void OnAfterDetach(object? argument);
+
+        // OnActivate
+        internal void OnActivate(object? argument);
+        internal void OnBeforeActivate(object? argument);
+        internal void OnAfterActivate(object? argument);
+
+        // OnDeactivate
+        internal void OnDeactivate(object? argument);
+        internal void OnBeforeDeactivate(object? argument);
+        internal void OnAfterDeactivate(object? argument);
+
     }
 }

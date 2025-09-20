@@ -4,7 +4,7 @@ namespace System.TreeMachine.Pro {
     using System.Collections.Generic;
     using System.Text;
 
-    public class Node : NodeBase {
+    public class Node2 : NodeBase2 {
 
         // Sort
         public Action<List<INode>>? SortDelegate { get; init; }
@@ -17,8 +17,20 @@ namespace System.TreeMachine.Pro {
         public event Action<object?>? OnActivateCallback;
         public event Action<object?>? OnDeactivateCallback;
 
+        // OnDescendantAttach
+        public event Action<INode2, object?>? OnBeforeDescendantAttachCallback;
+        public event Action<INode2, object?>? OnAfterDescendantAttachCallback;
+        public event Action<INode2, object?>? OnBeforeDescendantDetachCallback;
+        public event Action<INode2, object?>? OnAfterDescendantDetachCallback;
+
+        // OnDescendantActivate
+        public event Action<INode2, object?>? OnBeforeDescendantActivateCallback;
+        public event Action<INode2, object?>? OnAfterDescendantActivateCallback;
+        public event Action<INode2, object?>? OnBeforeDescendantDeactivateCallback;
+        public event Action<INode2, object?>? OnAfterDescendantDeactivateCallback;
+
         // Constructor
-        public Node() {
+        public Node2() {
         }
 
         // OnAttach
@@ -35,6 +47,34 @@ namespace System.TreeMachine.Pro {
         }
         protected override void OnDeactivate(object? argument) {
             this.OnDeactivateCallback?.Invoke( argument );
+        }
+
+        // OnDescendantAttach
+        protected override void OnBeforeDescendantAttach(INode2 descendant, object? argument) {
+            this.OnBeforeDescendantAttachCallback?.Invoke( descendant, argument );
+        }
+        protected override void OnAfterDescendantAttach(INode2 descendant, object? argument) {
+            this.OnAfterDescendantAttachCallback?.Invoke( descendant, argument );
+        }
+        protected override void OnBeforeDescendantDetach(INode2 descendant, object? argument) {
+            this.OnBeforeDescendantDetachCallback?.Invoke( descendant, argument );
+        }
+        protected override void OnAfterDescendantDetach(INode2 descendant, object? argument) {
+            this.OnAfterDescendantDetachCallback?.Invoke( descendant, argument );
+        }
+
+        // OnDescendantActivate
+        protected override void OnBeforeDescendantActivate(INode2 descendant, object? argument) {
+            this.OnBeforeDescendantActivateCallback?.Invoke( descendant, argument );
+        }
+        protected override void OnAfterDescendantActivate(INode2 descendant, object? argument) {
+            this.OnAfterDescendantActivateCallback?.Invoke( descendant, argument );
+        }
+        protected override void OnBeforeDescendantDeactivate(INode2 descendant, object? argument) {
+            this.OnBeforeDescendantDeactivateCallback?.Invoke( descendant, argument );
+        }
+        protected override void OnAfterDescendantDeactivate(INode2 descendant, object? argument) {
+            this.OnAfterDescendantDeactivateCallback?.Invoke( descendant, argument );
         }
 
         // AddChild
@@ -70,13 +110,13 @@ namespace System.TreeMachine.Pro {
         }
 
     }
-    public class Node<TUserData> : Node {
+    public class Node2<TUserData> : Node2, IUserData<TUserData> {
 
         // UserData
         public TUserData UserData { get; }
 
         // Constructor
-        public Node(TUserData userData) {
+        public Node2(TUserData userData) {
             this.UserData = userData;
         }
 

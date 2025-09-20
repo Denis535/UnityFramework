@@ -8,7 +8,7 @@ namespace UnityEngine.Framework {
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.UIElements;
-    
+
     public abstract class ProgramBase2 : ProgramBase, IDependencyProvider {
 
         // Awake

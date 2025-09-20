@@ -35,7 +35,7 @@ namespace System.StateMachine.Pro {
         }
 
     }
-    public class State<TUserData> : State {
+    public class State<TUserData> : State, IUserData<TUserData> {
 
         // UserData
         public TUserData UserData { get; }

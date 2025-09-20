@@ -19,7 +19,7 @@ namespace UnityEngine.Framework {
             }
         }
         // Node
-        public INode Node => this.NodeMutable;
+        public INode2 Node => this.NodeMutable;
         protected internal Node2<WidgetBase> NodeMutable { get; }
 
         // Document
@@ -50,13 +50,13 @@ namespace UnityEngine.Framework {
         protected abstract void OnDeactivate(object? argument);
 
         // OnDescendantActivate
-        protected virtual void OnBeforeDescendantActivate(NodeBase descendant, object? argument) {
+        protected virtual void OnBeforeDescendantActivate(INode2 descendant, object? argument) {
         }
-        protected virtual void OnAfterDescendantActivate(NodeBase descendant, object? argument) {
+        protected virtual void OnAfterDescendantActivate(INode2 descendant, object? argument) {
         }
-        protected virtual void OnBeforeDescendantDeactivate(NodeBase descendant, object? argument) {
+        protected virtual void OnBeforeDescendantDeactivate(INode2 descendant, object? argument) {
         }
-        protected virtual void OnAfterDescendantDeactivate(NodeBase descendant, object? argument) {
+        protected virtual void OnAfterDescendantDeactivate(INode2 descendant, object? argument) {
         }
 
         // Sort

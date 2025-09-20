@@ -11,28 +11,28 @@ namespace UnityEngine.Framework {
 
         // PlayList
         public static PlayListBase PlayList(this IState state) {
-            return ((State<PlayListBase>) state).UserData;
+            return ((IUserData<PlayListBase>) state).UserData;
         }
         public static T PlayList<T>(this IState state) where T : notnull, PlayListBase {
-            return (T) ((State<PlayListBase>) state).UserData;
+            return (T) ((IUserData<PlayListBase>) state).UserData;
         }
 
         // GetCancellationToken
-        public static CancellationToken GetCancellationToken_OnDetachCallback(this PlayListBase playList) {
+        public static CancellationToken GetCancellationToken_OnDetachCallback(this State state) {
             var cts = new CancellationTokenSource();
-            playList.StateMutable.OnDetachCallback += Callback;
+            state.OnDetachCallback += Callback;
             void Callback(object? argument) {
                 cts.Cancel();
-                playList.StateMutable.OnDetachCallback -= Callback;
+                state.OnDetachCallback -= Callback;
             }
             return cts.Token;
         }
-        public static CancellationToken GetCancellationToken_OnDeactivateCallback(this PlayListBase playList) {
+        public static CancellationToken GetCancellationToken_OnDeactivateCallback(this State state) {
             var cts = new CancellationTokenSource();
-            playList.StateMutable.OnDeactivateCallback += Callback;
+            state.OnDeactivateCallback += Callback;
             void Callback(object? argument) {
                 cts.Cancel();
-                playList.StateMutable.OnDeactivateCallback -= Callback;
+                state.OnDeactivateCallback -= Callback;
             }
             return cts.Token;
         }
